@@ -21,6 +21,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
      */
     public function bootstrap($app)
     {
+        dpm('jjj');
         if ($app instanceof \yii\web\Application) {
             $app->getUrlManager()->addRules([
                 'user' => "{$this->id}/user/index",

@@ -1,0 +1,29 @@
+{
+  "name": "rushstart/yii2-user",
+  "description": "User registration and authentication module for Yii2",
+  "keywords": ["yii2", "yii2-user", "user management", "rushstart"],
+  "type": "yii2-extension",
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Petrov Dmitriy",
+      "email": "8kolos8@mail.ru"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.4",
+    "yiisoft/yii2": "~2.0.17"
+  },
+  "autoload": {
+    "psr-4": {
+      "rushstart\\user\\": ""
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
+}

@@ -1,12 +1,12 @@
 <?php
 
 
-use app\extensions\widgets\ActiveForm;
-use yii\bootstrap\Html;
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\modules\user\models\LoginForm */
+/* @var $form ActiveForm */
+/* @var $model rushstart\user\models\LoginForm */
 
 $this->title = 'Вход';
 ?>
@@ -26,10 +26,10 @@ $this->title = 'Вход';
         <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
         <div class="form-group">
-        <?= Html::submitButton('Войти', [
-            'class' => 'btn btn--primary btn--block',
-            'name' => 'login-button'
-        ]) ?>
+            <?= Html::submitButton('Войти', [
+                'class' => 'btn btn--primary btn--block',
+                'name' => 'login-button'
+            ]) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

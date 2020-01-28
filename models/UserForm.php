@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\user\models;
+namespace rushstart\user\models;
 
 use Yii;
 

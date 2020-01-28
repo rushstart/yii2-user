@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\user\controllers;
+namespace rushstart\user\controllers;
 
-use app\modules\user\models\LoginForm;
-use app\modules\user\models\SignupForm;
+use rushstart\user\models\LoginForm;
+use rushstart\user\models\SignupForm;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -37,7 +37,10 @@ class UserController extends Controller
 
     public function actionIndex()
     {
-        //current user view
+        dpm(Yii::$app->user->accessChecker);
+        dpm(Yii::$app->user->can('change_user_password'));
+        dpm(Yii::$app->getAuthManager());
+        return $this->render('index');
     }
 
     public function actionEdit()

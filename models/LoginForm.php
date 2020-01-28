@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\modules\user\models;
+namespace rushstart\user\models;
 
 
 use Yii;
@@ -48,6 +48,18 @@ class LoginForm extends Model
                 $this->addError($attribute, 'Неверный Email или Пароль.');
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'email' => 'Email',
+            'password' => 'Пароль',
+            'rememberMe' => 'Запомнить меня',
+        ];
     }
 
     /**

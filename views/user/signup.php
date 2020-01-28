@@ -1,11 +1,11 @@
 <?php
 
-use app\extensions\widgets\ActiveForm;
-use yii\bootstrap\Html;
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\modules\user\models\SignupForm */
+/* @var $form ActiveForm */
+/* @var $model rushstart\user\models\SignupForm */
 
 $this->title = 'Регистрация';
 
@@ -20,7 +20,7 @@ $this->title = 'Регистрация';
 
         <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
 
-        <?= $form->field($model, 'email') ?>
+        <?= $form->field($model, 'email')->textInput(['type' => 'email']) ?>
 
         <?= $form->field($model, 'password')->passwordInput() ?>
 

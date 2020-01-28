@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\modules\user\models;
+namespace rushstart\user\models;
 
 
 use yii\db\ActiveRecord;
@@ -54,7 +54,10 @@ class Identity extends User implements IdentityInterface
      */
     public static function findByEmail(string $email)
     {
-        return static::find()->where(['email' => $email])->active()->one();
+        return static::find()
+            ->leftJoin('user_auth', 'user_auth.user_id=user.id')
+            ->andWhere(['source' => Identity::AUTH_EMAIL, 'source_id' => $email])
+            ->active()->one();
     }
 
     /**

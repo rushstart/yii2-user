@@ -1,10 +1,10 @@
 <?php
 
 
-namespace app\modules\user\models;
+namespace rushstart\user\models;
 
 
-use app\extensions\db\ActiveRecord;
+use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
 
 /**

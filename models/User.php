@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\user\models;
+namespace rushstart\user\models;
 
 
 use yii\db\ActiveRecord;
@@ -29,6 +29,8 @@ class User extends ActiveRecord
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+
+    const AUTH_EMAIL = 'email';
 
     /**
      * {@inheritdoc}

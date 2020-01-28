@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\modules\user\models;
+namespace rushstart\user\models;
 
 use yii\base\Model;
 
@@ -32,6 +32,18 @@ class SignupForm extends Model
             //
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'name'=>'Ваше имя',
+            'email' => 'Email',
+            'password' => 'Пароль',
         ];
     }
 

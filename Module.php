@@ -6,14 +6,16 @@ use yii\base\Application;
 use yii\base\BootstrapInterface;
 
 /**
- * user module definition class
+ * User module definition class
  */
 class Module extends \yii\base\Module implements BootstrapInterface
 {
+
     /**
-     * {@inheritdoc}
+     * The root URL of the module.
+     * @var string
      */
-    public $controllerNamespace = 'app\modules\user\controllers';
+    public $baseUrl = 'user';
 
     /**
      * Bootstrap method to be called during application bootstrap stage.
@@ -23,8 +25,8 @@ class Module extends \yii\base\Module implements BootstrapInterface
     {
         if ($app instanceof \yii\web\Application) {
             $app->getUrlManager()->addRules([
-                'user' => "{$this->id}/user/index",
-                'user/<action>' => "{$this->id}/user/<action>",
+                $this->baseUrl => "{$this->id}/user/index",
+                "{$this->baseUrl}/<action>" => "{$this->id}/user/<action>",
             ], false);
         }
     }

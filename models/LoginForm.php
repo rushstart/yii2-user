@@ -20,6 +20,7 @@ class LoginForm extends Model
      * @var Identity
      */
     private $_identity = false;
+    private $_auth = false;
 
     /**
      * @inheritdoc
@@ -43,8 +44,9 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $identity = $this->getIdentity();
+            $auth = $this->getAuth();
 
-            if (!$identity || !$identity->validatePassword($this->password)) {
+            if (!$auth || !$identity || !Yii::$app->security->validatePassword($this->password, $auth->source_token)) {
                 $this->addError($attribute, 'Неверный Email или Пароль.');
             }
         }
@@ -62,6 +64,14 @@ class LoginForm extends Model
         ];
     }
 
+    public function getAuth()
+    {
+        if ($this->_auth === false) {
+            $this->_auth = UserAuth::findOne(['source' => 'email', 'source_id' => $this->email]);
+        }
+        return $this->_auth;
+    }
+
     /**
      * Finds identity by email
      *
@@ -70,7 +80,10 @@ class LoginForm extends Model
     public function getIdentity()
     {
         if ($this->_identity === false) {
-            $this->_identity = Identity::findByEmail($this->email);
+            if ($this->getAuth() === null) {
+                $this->_identity = null;
+            }
+            $this->_identity = Identity::findIdentity($this->getAuth()->user_id);
         }
         return $this->_identity;
     }

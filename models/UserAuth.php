@@ -4,6 +4,7 @@
 namespace rushstart\user\models;
 
 
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -19,7 +20,7 @@ use yii\db\ActiveRecord;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property User $user
+ * @property Identity $identity
  */
 class UserAuth extends ActiveRecord
 {
@@ -31,13 +32,20 @@ class UserAuth extends ActiveRecord
         return 'user_auth';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
+    }
+
     /**
      * Gets query for [[User]].
      *
      * @return ActiveQuery
      */
-    public function getUser()
+    public function getIdentity()
     {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
+        return $this->hasOne(Identity::class, ['id' => 'user_id']);
     }
 }

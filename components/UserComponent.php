@@ -23,4 +23,12 @@ class UserComponent extends User
         }
         return parent::can($permissionName, $params, $allowCaching);
     }
+
+    protected function afterLogin($identity, $cookieBased, $duration)
+    {
+        $identity->logged_in_at = time();
+        $identity->save(false,['logged_in_at']);
+        parent::afterLogin($identity, $cookieBased, $duration);
+    }
+
 }

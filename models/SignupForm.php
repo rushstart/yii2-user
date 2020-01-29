@@ -3,6 +3,8 @@
 
 namespace rushstart\user\models;
 
+use Yii;
+use yii\base\Exception;
 use yii\base\Model;
 
 /**
@@ -24,7 +26,7 @@ class SignupForm extends Model
             ['email', 'required'],
             ['email', 'string', 'max' => 255],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => User::class, 'message' => 'Такой Email уже используется.'],
+            ['email', 'emailValidate'],
             //
             ['name', 'trim'],
             ['name', 'required'],
@@ -35,13 +37,20 @@ class SignupForm extends Model
         ];
     }
 
+    public function emailValidate($attribute, $params)
+    {
+        if (UserAuth::findOne(['source' => 'email', 'source_id' => $this->$attribute]) !== null) {
+            $this->addError($attribute, 'Такой email уже используется');
+        }
+    }
+
     /**
      * {@inheritdoc}
      */
     public function attributeLabels()
     {
         return [
-            'name'=>'Ваше имя',
+            'name' => 'Ваше имя',
             'email' => 'Email',
             'password' => 'Пароль',
         ];
@@ -51,6 +60,7 @@ class SignupForm extends Model
      * Signs user up.
      *
      * @return bool whether the creating new account was successful
+     * @throws Exception
      */
     public function signup()
     {
@@ -58,14 +68,36 @@ class SignupForm extends Model
             return false;
         }
 
-        $user = new Identity();
-        $user->name = $this->name;
-        $user->email = $this->email;
-        $user->status = User::STATUS_ACTIVE;
-        $user->setPassword($this->password);
+        $user = new Identity([
+            'name' => $this->name,
+        ]);
         $user->generateAuthKey();
 
-        return $user->save();
+        $transaction = User::getDb()->beginTransaction();
+
+        if ($user->save()) {
+            $auth = new UserAuth([
+                'user_id' => $user->id,
+                'source' => 'email',
+                'source_id' => $this->email,
+                'source_token' => Yii::$app->security->generatePasswordHash($this->password),
+            ]);
+            if ($auth->save()) {
+                $transaction->commit();
+                Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration'] ?? 0);
+                return true;
+            } else {
+                /** @noinspection PhpComposerExtensionStubsInspection */
+                Yii::$app->getSession()->setFlash('error', [
+                    Yii::t('app', 'Unable to save {client} account: {errors}', [
+                        'client' => 'email',
+                        'errors' => json_encode($auth->getErrors()),
+                    ]),
+                ]);
+            }
+        }
+        return false;
+
     }
 
 }

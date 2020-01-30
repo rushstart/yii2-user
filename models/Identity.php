@@ -15,8 +15,6 @@ use Yii;
 class Identity extends User implements IdentityInterface
 {
 
-    const SOURCE_EMAIL = 'email';
-
     /**
      * Finds an identity by the given ID.
      * @param string|int $id the ID to be looked for
@@ -86,7 +84,6 @@ class Identity extends User implements IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        dpm('f');
         return $this->getAuthKey() === $authKey;
     }
 

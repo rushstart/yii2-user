@@ -38,6 +38,7 @@ class UserController extends Controller
 
     public function actionIndex()
     {
+        //current user
         dpm(Yii::$app->user->accessChecker);
         dpm(Yii::$app->user->can('change_user_password'));
         dpm(Yii::$app->getAuthManager());
@@ -94,14 +95,18 @@ class UserController extends Controller
      */
     public function actionSignup()
     {
-        if (!Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new SignupByEmailForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            $this->redirect(['login']);
+            if (Yii::$app->user->isGuest) {
+                $this->redirect(['login']);
+            } else {
+                return $this->goHome();
+            }
         }
         return $this->render('signup', [
             'model' => $model,

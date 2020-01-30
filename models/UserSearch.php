@@ -20,8 +20,8 @@ class UserSearch extends User
     {
         return [
             [['status'], 'default', 'value' => ActiveRecord::STATUS_ACTIVE],
-            [['id'], 'integer'],
-            [['email', 'name', 'status'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -51,8 +51,7 @@ class UserSearch extends User
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
 
         return $dataProvider;

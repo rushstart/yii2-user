@@ -5,7 +5,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $form ActiveForm */
-/* @var $model rushstart\user\models\SignupForm */
+/* @var $model rushstart\user\models\SignupByEmailForm */
 
 $this->title = 'Регистрация';
 

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $form ActiveForm */
-/* @var $model rushstart\user\models\LoginForm */
+/* @var $model rushstart\user\models\LoginByEmailForm */
 
 $this->title = 'Вход';
 ?>

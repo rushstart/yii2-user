@@ -4,13 +4,14 @@
 namespace rushstart\user\models;
 
 
+use rushstart\user\models\auth\EmailAuth;
 use Yii;
 use yii\base\Model;
 
 /**
  * LoginForm is the model behind the login form.
  */
-class LoginForm extends Model
+class LoginByEmailForm extends Model
 {
     public $email;
     public $password;
@@ -43,11 +44,13 @@ class LoginForm extends Model
     public function validatePassword($attribute)
     {
         if (!$this->hasErrors()) {
-            $identity = $this->getIdentity();
             $auth = $this->getAuth();
 
-            if (!$auth || !$identity || !Yii::$app->security->validatePassword($this->password, $auth->source_token)) {
+            if (!$auth || !$auth->validatePassword($this->password)) {
                 $this->addError($attribute, 'Неверный Email или Пароль.');
+            }
+            if ($auth && !$this->getIdentity()) {
+                $this->addError($attribute, 'Пользователь заблокирован.');
             }
         }
     }
@@ -64,10 +67,13 @@ class LoginForm extends Model
         ];
     }
 
+    /**
+     * @return EmailAuth|null
+     */
     public function getAuth()
     {
         if ($this->_auth === false) {
-            $this->_auth = UserAuth::findOne(['source' => 'email', 'source_id' => $this->email]);
+            $this->_auth = EmailAuth::findByEmail($this->email);
         }
         return $this->_auth;
     }
@@ -95,7 +101,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getIdentity(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            return Yii::$app->user->login($this->getIdentity(), $this->rememberMe ? (Yii::$app->params['user.rememberMeDuration'] ?? 3600) : 0);
         }
         return false;
     }

@@ -21,7 +21,6 @@ class m200123_134832_create_table_user extends Migration
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
             'logged_in_at' => $this->integer(),
-            'logged_in_source' => $this->integer(),
         ]);
         $this->createTable('user_auth', [
             'id' => $this->primaryKey(),

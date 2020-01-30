@@ -44,7 +44,7 @@ class AuthHandler
                 /* @var Identity $user */
                 $user = $auth->identity;
                 $this->updateUserInfo($user);
-                Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration'] ?? 0);
+                Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration'] ?? 3600);
             } else { // signup
                 $user = new Identity([
                     'name' => $name,
@@ -61,7 +61,7 @@ class AuthHandler
                     ]);
                     if ($auth->save()) {
                         $transaction->commit();
-                        Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+                        Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration'] ?? 3600);
                     } else {
                         /** @noinspection PhpComposerExtensionStubsInspection */
                         Yii::$app->getSession()->setFlash('error', [

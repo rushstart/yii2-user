@@ -3,6 +3,8 @@
 namespace rushstart\user\components;
 
 
+use rushstart\user\models\Identity;
+use yii\web\IdentityInterface;
 use yii\web\User;
 
 /**
@@ -24,6 +26,11 @@ class UserComponent extends User
         return parent::can($permissionName, $params, $allowCaching);
     }
 
+    /**
+     * @param IdentityInterface|Identity $identity
+     * @param bool $cookieBased
+     * @param int $duration
+     */
     protected function afterLogin($identity, $cookieBased, $duration)
     {
         $identity->logged_in_at = time();

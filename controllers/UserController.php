@@ -2,9 +2,10 @@
 
 namespace rushstart\user\controllers;
 
-use rushstart\user\models\LoginForm;
-use rushstart\user\models\SignupForm;
+use rushstart\user\models\LoginByEmailForm;
+use rushstart\user\models\SignupByEmailForm;
 use Yii;
+use yii\base\Exception;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
@@ -74,7 +75,7 @@ class UserController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
+        $model = new LoginByEmailForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goHome();
@@ -89,6 +90,7 @@ class UserController extends Controller
      * Signs user up.
      *
      * @return Response|string
+     * @throws Exception
      */
     public function actionSignup()
     {
@@ -96,7 +98,7 @@ class UserController extends Controller
             return $this->goHome();
         }
 
-        $model = new SignupForm();
+        $model = new SignupByEmailForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             $this->redirect(['login']);

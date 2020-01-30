@@ -3,6 +3,7 @@
 
 namespace rushstart\user\models;
 
+use rushstart\user\models\auth\EmailAuth;
 use Yii;
 use yii\base\Exception;
 use yii\base\Model;
@@ -10,7 +11,7 @@ use yii\base\Model;
 /**
  * Signup form
  */
-class SignupForm extends Model
+class SignupByEmailForm extends Model
 {
     public $email;
     public $name;
@@ -39,7 +40,7 @@ class SignupForm extends Model
 
     public function emailValidate($attribute, $params)
     {
-        if (UserAuth::findOne(['source' => 'email', 'source_id' => $this->$attribute]) !== null) {
+        if (EmailAuth::findByEmail($this->$attribute) !== null) {
             $this->addError($attribute, 'Такой email уже используется');
         }
     }
@@ -76,15 +77,14 @@ class SignupForm extends Model
         $transaction = User::getDb()->beginTransaction();
 
         if ($user->save()) {
-            $auth = new UserAuth([
+            $auth = new EmailAuth([
                 'user_id' => $user->id,
-                'source' => 'email',
-                'source_id' => $this->email,
-                'source_token' => Yii::$app->security->generatePasswordHash($this->password),
+                'email' => $this->email,
+                'password' => $this->password,
             ]);
             if ($auth->save()) {
                 $transaction->commit();
-                Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration'] ?? 0);
+                Yii::$app->user->login($user, (Yii::$app->params['user.rememberMeDuration'] ?? 3600) ?? 0);
                 return true;
             } else {
                 /** @noinspection PhpComposerExtensionStubsInspection */

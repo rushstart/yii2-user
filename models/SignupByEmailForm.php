@@ -41,7 +41,7 @@ class SignupByEmailForm extends Model
     public function emailValidate($attribute, $params)
     {
         if (EmailAuth::findByEmail($this->$attribute) !== null) {
-            $this->addError($attribute, 'Такой email уже используется');
+            $this->addError($attribute, Yii::t('user', 'This email address has already been taken'));
         }
     }
 
@@ -51,9 +51,9 @@ class SignupByEmailForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => 'Ваше имя',
-            'email' => 'Email',
-            'password' => 'Пароль',
+            'name' => Yii::t('user', 'Your name'),
+            'email' => Yii::t('user', 'Email'),
+            'password' => Yii::t('user', 'Password'),
         ];
     }
 
@@ -89,8 +89,7 @@ class SignupByEmailForm extends Model
             } else {
                 /** @noinspection PhpComposerExtensionStubsInspection */
                 Yii::$app->getSession()->setFlash('error', [
-                    Yii::t('app', 'Unable to save {client} account: {errors}', [
-                        'client' => 'email',
+                    Yii::t('user', 'Unable to save account: {errors}', [
                         'errors' => json_encode($auth->getErrors()),
                     ]),
                 ]);

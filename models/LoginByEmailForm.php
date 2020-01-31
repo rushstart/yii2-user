@@ -47,10 +47,10 @@ class LoginByEmailForm extends Model
             $auth = $this->getAuth();
 
             if (!$auth || !$auth->validatePassword($this->password)) {
-                $this->addError($attribute, 'Неверный Email или Пароль.');
+                $this->addError($attribute, Yii::t('user','Invalid email or password'));
             }
             if ($auth && !$this->getIdentity()) {
-                $this->addError($attribute, 'Пользователь заблокирован.');
+                $this->addError($attribute, Yii::t('user','Your account has been blocked'));
             }
         }
     }
@@ -61,9 +61,9 @@ class LoginByEmailForm extends Model
     public function attributeLabels()
     {
         return [
-            'email' => 'Email',
-            'password' => 'Пароль',
-            'rememberMe' => 'Запомнить меня',
+            'email' => Yii::t('user', 'Email'),
+            'password' => Yii::t('user', 'Password'),
+            'rememberMe' => Yii::t('user', 'Remember me'),
         ];
     }
 

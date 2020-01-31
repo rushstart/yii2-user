@@ -22,7 +22,7 @@ class m200123_134832_create_table_user extends Migration
             'updated_at' => $this->integer()->notNull(),
             'logged_in_at' => $this->integer(),
         ]);
-        $this->createTable('user_auth', [
+        $this->createTable('user_account', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
             'source' => $this->string(32)->notNull(),
@@ -32,9 +32,9 @@ class m200123_134832_create_table_user extends Migration
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ]);
-        $this->addForeignKey('fk-auth-user_id-user-id', 'user_auth', 'user_id', 'user', 'id', 'CASCADE');
-        $this->addForeignKey('fk-user-logged_in_source-auth-id', 'user', 'logged_in_source', 'user_auth', 'id');
-        $this->createIndex('source', 'user_auth', ['source', 'source_id', 'source_token'], true);
+        $this->addForeignKey('fk-account-user_id-user-id', 'user_account', 'user_id', 'user', 'id', 'CASCADE');
+        $this->addForeignKey('fk-user-logged_in_source-account-id', 'user', 'logged_in_source', 'user_account', 'id');
+        $this->createIndex('source', 'user_account', ['source', 'source_id', 'source_token'], true);
     }
 
     /**
@@ -42,9 +42,9 @@ class m200123_134832_create_table_user extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey('fk-auth-user_id-user-id', 'user_auth');
-        $this->dropForeignKey('fk-user-logged_in_source-auth-id', 'user');
-        $this->dropTable('user_auth');
+        $this->dropForeignKey('fk-account-user_id-user-id', 'user_account');
+        $this->dropForeignKey('fk-user-logged_in_source-account-id', 'user');
+        $this->dropTable('user_account');
         $this->dropTable('user');
     }
 

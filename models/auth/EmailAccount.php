@@ -4,7 +4,8 @@
 namespace rushstart\user\models\auth;
 
 
-use rushstart\user\models\UserAuth;
+use rushstart\user\ClientInterface;
+use rushstart\user\models\UserAccount;
 use Yii;
 use yii\base\Exception;
 use yii\db\ActiveQuery;
@@ -17,7 +18,7 @@ use yii\db\ActiveRecord;
  * @property string $email
  * @property string $password write-only password
  */
-class EmailAuth extends UserAuth
+class EmailAccount extends UserAccount implements ClientInterface
 {
     const SOURCE = 'email';
 
@@ -30,7 +31,7 @@ class EmailAuth extends UserAuth
             public function init()
             {
                 parent::init();
-                $this->andWhere(['source' => EmailAuth::SOURCE]);
+                $this->andWhere(['source' => EmailAccount::SOURCE]);
             }
         };
     }
@@ -94,5 +95,69 @@ class EmailAuth extends UserAuth
     public function setPassword($value)
     {
         $this->source_token = Yii::$app->security->generatePasswordHash($value);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setId($id)
+    {
+        $this->source = $id;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getId()
+    {
+        // TODO: Implement getId() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        // TODO: Implement getName() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setName($name)
+    {
+        // TODO: Implement setName() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTitle()
+    {
+        // TODO: Implement getTitle() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setTitle($title)
+    {
+        // TODO: Implement setTitle() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUserAttributes()
+    {
+        // TODO: Implement getUserAttributes() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getViewOptions()
+    {
+        // TODO: Implement getViewOptions() method.
     }
 }

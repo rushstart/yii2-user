@@ -4,7 +4,7 @@
 namespace rushstart\user\models;
 
 
-use rushstart\user\models\auth\EmailAuth;
+use rushstart\user\models\auth\EmailAccount;
 use Yii;
 use yii\base\Model;
 
@@ -68,12 +68,12 @@ class LoginByEmailForm extends Model
     }
 
     /**
-     * @return EmailAuth|null
+     * @return EmailAccount|null
      */
     public function getAuth()
     {
         if ($this->_auth === false) {
-            $this->_auth = EmailAuth::findByEmail($this->email);
+            $this->_auth = EmailAccount::findByEmail($this->email);
         }
         return $this->_auth;
     }

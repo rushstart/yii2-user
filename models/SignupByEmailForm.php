@@ -3,7 +3,7 @@
 
 namespace rushstart\user\models;
 
-use rushstart\user\models\auth\EmailAuth;
+use rushstart\user\models\auth\EmailAccount;
 use Yii;
 use yii\base\Exception;
 use yii\base\Model;
@@ -40,7 +40,7 @@ class SignupByEmailForm extends Model
 
     public function emailValidate($attribute, $params)
     {
-        if (EmailAuth::findByEmail($this->$attribute) !== null) {
+        if (EmailAccount::findByEmail($this->$attribute) !== null) {
             $this->addError($attribute, Yii::t('user', 'This email address has already been taken'));
         }
     }
@@ -77,7 +77,7 @@ class SignupByEmailForm extends Model
         $transaction = User::getDb()->beginTransaction();
 
         if ($user->save()) {
-            $auth = new EmailAuth([
+            $auth = new EmailAccount([
                 'user_id' => $user->id,
                 'email' => $this->email,
                 'password' => $this->password,

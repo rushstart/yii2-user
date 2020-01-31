@@ -22,7 +22,7 @@ use yii\db\ActiveRecord;
  *
  * @property Identity $identity
  */
-class UserAuth extends ActiveRecord
+class UserAccount extends ActiveRecord
 {
     /**
      * {@inheritdoc}

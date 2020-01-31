@@ -28,7 +28,6 @@ return [
             'class' => 'rushstart\user\components\UserComponent',
             'identityClass' => 'rushstart\user\models\Identity',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity', 'httpOnly' => true],
             'urlPrefix' => 'user', //The prefix for user module URL.
         ],
     ],

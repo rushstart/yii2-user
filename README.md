@@ -61,7 +61,7 @@ return [
             'class' => 'yii\console\controllers\MigrateController',
             'migrationPath' => [
                 '@app/migrations',
-                '@rushstart/user/migrations',
+                '@vendor/rushstart/yii2-user/migrations',
             ],
         ],
     ],

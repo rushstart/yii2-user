@@ -1,5 +1,9 @@
-Yii 2 User
+Yii2 User Extension
 =========
+
+[![Latest Stable Version](https://poser.pugx.org/rushstart/yii2-user/v/stable)](https://packagist.org/packages/rushstart/yii2-user)
+[![Total Downloads](https://poser.pugx.org/rushstart/yii2-user/downloads)](https://packagist.org/packages/rushstart/yii2-user)
+[![License](https://poser.pugx.org/rushstart/yii2-user/license)](https://packagist.org/packages/rushstart/yii2-user)
 
 Yii2-user is designed to work out of the box. It means that installation requires
 minimal steps. Only one configuration step should be taken and you are ready to

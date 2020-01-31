@@ -4,7 +4,7 @@
 namespace rushstart\user\components;
 
 
-use app\extensions\helpers\ArrayHelper;
+use yii\helpers\ArrayHelper;
 use rushstart\user\models\Identity;
 use rushstart\user\models\User;
 use rushstart\user\models\UserAuth;
